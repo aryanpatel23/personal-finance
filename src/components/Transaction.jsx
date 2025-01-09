@@ -144,6 +144,7 @@ const columns = [
 ];
 
 export default function DataTableDemo() {
+  //minor change
   const [sorting, setSorting] = useState([]);
   const [columnFilters, setColumnFilters] = useState([]);
   const [columnVisibility, setColumnVisibility] = useState({});
