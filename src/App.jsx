@@ -1,5 +1,5 @@
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
-import { SidebarProvider, SidebarTrigger } from "@/components/ui/sidebar";
+import { SidebarProvider } from "@/components/ui/sidebar";
 import { AppSidebar } from "@/components/sideBar";
 import DataTableDemo from "@/components/Transaction";
 import transactions from "/Users/aryanpatel/Desktop/personal_finance/src/data.json"; // Import the JSON data
@@ -10,7 +10,7 @@ export default function Layout() {
       <SidebarProvider>
         <AppSidebar />
         <main>
-          <SidebarTrigger />
+          {/* <SidebarTrigger /> */}
           <Routes>
             <Route path="/" element={<div>Welcome to the Dashboard</div>} />
             <Route path="/overview" element={<div>Overview Page</div>} />

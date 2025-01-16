@@ -5,7 +5,13 @@ import TransactionIcon from "../assets/images/icon-nav-transactions.svg";
 import PotsIcon from "../assets/images/icon-nav-pots.svg";
 import RecurringIcon from "../assets/images/icon-nav-recurring-bills.svg";
 import LogoLarge from "../assets/images/logo-large.svg";
+import { useSidebar } from "@/components/ui/sidebar";
 
+export function CustomTrigger() {
+  const { toggleSidebar } = useSidebar();
+
+  return <button onClick={toggleSidebar}>Toggle Sidebar</button>;
+}
 import {
   Sidebar,
   SidebarContent,
@@ -27,11 +33,13 @@ const items = [
 
 export function AppSidebar() {
   return (
-    <Sidebar>
-      <SidebarContent className="bg-black text-2xl font-extrabold mb-4">
-        <SidebarGroup>
-          <SidebarGroupLabel className="text-white text-lg font-bold px-4 py-2">
-            <img src={LogoLarge} alt="Finance logo" />
+    <Sidebar className="hidden h-screen fixed top-0 left-0 z-10 lg:block bg-[#201F24] rounded-tr-xl rounded-br-xl duration-500 transition-[width] w-[300px] collapsible=offcanvas | icon | none">
+      <SidebarContent className="bg-[#201F24] text-2xl font-extrabold mb-4">
+        <SidebarGroup className="w-[292px]">
+          <SidebarGroupLabel className="text-white text-lg font-bold px-5 py-12 pt-8">
+            <div class="pt-6 ">
+              <img src={LogoLarge} width="100" height="50" alt="Finance logo" />
+            </div>
           </SidebarGroupLabel>
           <SidebarGroupContent>
             <SidebarMenu>
@@ -40,17 +48,19 @@ export function AppSidebar() {
                   key={index}
                   className="flex items-center gap-4 p-4 pl-0 mb-4 last:mb-0"
                 >
-                  <SidebarMenuItem className="w-full border-l-2 border-[#277C78]">
-                    <SidebarMenuButton
-                      asChild
-                      className="rounded-l-none toggle-switch"
-                    >
-                      <Link to={item.url}>
-                        <img src={item.icon} alt={`${item.title} Icon`} />
-                        <span>{item.title}</span>
-                      </Link>
-                    </SidebarMenuButton>
-                  </SidebarMenuItem>
+                  <div className="py-3 w-full h-[5px] flex flex-col  max-w-[95%]">
+                    <SidebarMenuItem className=" border-l-2 border-[#277C78]">
+                      <SidebarMenuButton
+                        asChild
+                        className="rounded-l-none toggle-switch flex gap-3 text-[#B3B3B3] items-center py-3 px-6 font-medium rounded-tr-[9px] text-sm rounded-br-[9px] duration-1000 delay-1000 transition-[display]"
+                      >
+                        <Link to={item.url}>
+                          <img src={item.icon} alt={`${item.title} Icon`} />
+                          <span>{item.title}</span>
+                        </Link>
+                      </SidebarMenuButton>
+                    </SidebarMenuItem>
+                  </div>
                 </div>
               ))}
             </SidebarMenu>

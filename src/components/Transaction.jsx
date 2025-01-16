@@ -1,6 +1,9 @@
 "use client";
 
 import React, { useState } from "react";
+import transactions from "/Users/aryanpatel/Desktop/personal_finance/src/data.json";
+import { Label } from "@/components/ui/label";
+
 import {
   flexRender,
   getCoreRowModel,
@@ -9,20 +12,29 @@ import {
   getSortedRowModel,
   useReactTable,
 } from "@tanstack/react-table";
+
+import {
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from "@/components/ui/select";
+
 import { ArrowUpDown, ChevronDown, MoreHorizontal } from "lucide-react";
 
 import { Button } from "@/components/ui/button";
-import { Checkbox } from "@/components/ui/checkbox";
+import { Input } from "@/components/ui/input";
+
 import {
   DropdownMenu,
-  DropdownMenuCheckboxItem,
   DropdownMenuContent,
   DropdownMenuItem,
   DropdownMenuLabel,
   DropdownMenuSeparator,
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
-import { Input } from "@/components/ui/input";
+
 import {
   Table,
   TableBody,
@@ -32,127 +44,82 @@ import {
   TableRow,
 } from "@/components/ui/table";
 
-const data = [
-  { id: "m5gr84i9", amount: 316, status: "success", email: "ken99@yahoo.com" },
-  { id: "3u1reuv4", amount: 242, status: "success", email: "Abe45@gmail.com" },
-  {
-    id: "derv1ws0",
-    amount: 837,
-    status: "processing",
-    email: "Monserrat44@gmail.com",
-  },
-  {
-    id: "5kma53ae",
-    amount: 874,
-    status: "success",
-    email: "Silas22@gmail.com",
-  },
-  {
-    id: "bhqecj4p",
-    amount: 721,
-    status: "failed",
-    email: "carmella@hotmail.com",
-  },
-];
-
-const columns = [
-  {
-    id: "select",
-    header: ({ table }) => (
-      <Checkbox
-        checked={
-          table.getIsAllPageRowsSelected() ||
-          (table.getIsSomePageRowsSelected() && "indeterminate")
-        }
-        onCheckedChange={(value) => table.toggleAllPageRowsSelected(!!value)}
-        aria-label="Select all"
-      />
-    ),
-    cell: ({ row }) => (
-      <Checkbox
-        checked={row.getIsSelected()}
-        onCheckedChange={(value) => row.toggleSelected(!!value)}
-        aria-label="Select row"
-      />
-    ),
-    enableSorting: false,
-    enableHiding: false,
-  },
-  {
-    accessorKey: "status",
-    header: "Status",
-    cell: ({ row }) => (
-      <div className="capitalize">{row.getValue("status")}</div>
-    ),
-  },
-  {
-    accessorKey: "email",
-    header: ({ column }) => (
-      <Button
-        variant="ghost"
-        onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}
-      >
-        Email
-        <ArrowUpDown />
-      </Button>
-    ),
-    cell: ({ row }) => <div className="lowercase">{row.getValue("email")}</div>,
-  },
-  {
-    accessorKey: "amount",
-    header: () => <div className="text-right">Amount</div>,
-    cell: ({ row }) => {
-      const amount = parseFloat(row.getValue("amount"));
-
-      const formatted = new Intl.NumberFormat("en-US", {
-        style: "currency",
-        currency: "USD",
-      }).format(amount);
-
-      return <div className="text-right font-medium">{formatted}</div>;
-    },
-  },
-  {
-    id: "actions",
-    enableHiding: false,
-    cell: ({ row }) => {
-      const payment = row.original;
-
-      return (
-        <DropdownMenu>
-          <DropdownMenuTrigger asChild>
-            <Button variant="ghost" className="h-8 w-8 p-0">
-              <span className="sr-only">Open menu</span>
-              <MoreHorizontal />
-            </Button>
-          </DropdownMenuTrigger>
-          <DropdownMenuContent align="end">
-            <DropdownMenuLabel>Actions</DropdownMenuLabel>
-            <DropdownMenuItem
-              onClick={() => navigator.clipboard.writeText(payment.id)}
-            >
-              Copy payment ID
-            </DropdownMenuItem>
-            <DropdownMenuSeparator />
-            <DropdownMenuItem>View customer</DropdownMenuItem>
-            <DropdownMenuItem>View payment details</DropdownMenuItem>
-          </DropdownMenuContent>
-        </DropdownMenu>
-      );
-    },
-  },
-];
+import {
+  Pagination,
+  PaginationContent,
+  PaginationItem,
+  PaginationLink,
+  PaginationNext,
+  PaginationPrevious,
+} from "@/components/ui/pagination";
 
 export default function DataTableDemo() {
-  //minor change
-  const [sorting, setSorting] = useState([]);
-  const [columnFilters, setColumnFilters] = useState([]);
+  const [sorting, setSorting] = useState([{ id: "date", desc: true }]);
+  const [columnFilters, setColumnFilters] = useState([
+    // { id: "category", value: "General" }, // Default filter
+  ]);
   const [columnVisibility, setColumnVisibility] = useState({});
   const [rowSelection, setRowSelection] = useState({});
+  const [selectedCategory, setSelectedCategory] = useState("All Transactions");
 
   const table = useReactTable({
-    data,
-    columns,
+    data: transactions.transactions, // Use transactions from JSON file
+    columns: [
+      // {
+      //   accessorKey: "avatar",
+      //   header: "Avatar",
+      //   cell: ({ row }) => (
+      //     <img
+      //       src={row.getValue("avatar")}
+      //       alt="avatar"
+      //       className="w-10 h-10 rounded-full object-cover"
+      //     />
+      //   ),
+      //   enableSorting: false, // Disable sorting for images
+      // },
+      {
+        accessorKey: "name",
+        header: "Recipient / Sender",
+        cell: ({ row }) => (
+          <div className="flex items-center gap-4">
+            <img
+              src={row.getValue("avatar")}
+              alt="avatar"
+              className="w-8 h-8 rounded-full object-cover "
+            />
+            <div className="text-left font-semibold text-[#201F24]">
+              {row.getValue("name")}
+            </div>
+          </div>
+        ),
+      },
+      {
+        accessorKey: "category",
+        cell: ({ row }) => (
+          <div className="lowercase">{row.getValue("category")}</div>
+        ),
+      },
+      {
+        accessorKey: "date",
+        header: "Date",
+        cell: ({ row }) => {
+          const date = new Date(row.getValue("date")).toLocaleDateString();
+          return <div>{date}</div>;
+        },
+      },
+      {
+        accessorKey: "amount",
+        header: () => <div className="text-right">Amount</div>,
+        cell: ({ row }) => {
+          const amount = parseFloat(row.getValue("amount"));
+          const formatted = new Intl.NumberFormat("en-US", {
+            style: "currency",
+            currency: "USD",
+          }).format(amount);
+          return <div className="text-right font-medium">{formatted}</div>;
+        },
+      },
+    ],
     onSortingChange: setSorting,
     onColumnFiltersChange: setColumnFilters,
     getCoreRowModel: getCoreRowModel(),
@@ -169,112 +136,174 @@ export default function DataTableDemo() {
     },
   });
 
+  const categories = Array.from(
+    new Set(
+      transactions.transactions.map((transaction) => transaction.category)
+    )
+  );
+
   return (
-    <div className="w-full">
-      <div className="flex items-center py-4">
-        <Input
-          placeholder="Filter emails..."
-          value={table.getColumn("email")?.getFilterValue() ?? ""}
-          onChange={(event) =>
-            table.getColumn("email")?.setFilterValue(event.target.value)
-          }
-          className="max-w-sm"
-        />
-        <DropdownMenu>
-          <DropdownMenuTrigger asChild>
-            <Button variant="outline" className="ml-auto">
-              Columns <ChevronDown />
-            </Button>
-          </DropdownMenuTrigger>
-          <DropdownMenuContent align="end">
-            {table
-              .getAllColumns()
-              .filter((column) => column.getCanHide())
-              .map((column) => (
-                <DropdownMenuCheckboxItem
-                  key={column.id}
-                  className="capitalize"
-                  checked={column.getIsVisible()}
-                  onCheckedChange={(value) => column.toggleVisibility(!!value)}
-                >
-                  {column.id}
-                </DropdownMenuCheckboxItem>
-              ))}
-          </DropdownMenuContent>
-        </DropdownMenu>
+    <div className="px-2.5rem py-2.5rem lg:px-20 pt-[90px] w-[1100px]">
+      <div className="absolute top-8 ">
+        <h1 className="text-2xl font-bold">Transactions</h1>
       </div>
-      <div className="rounded-md border">
-        <Table>
-          <TableHeader>
-            {table.getHeaderGroups().map((headerGroup) => (
-              <TableRow key={headerGroup.id}>
-                {headerGroup.headers.map((header) => (
-                  <TableHead key={header.id}>
-                    {header.isPlaceholder
-                      ? null
-                      : flexRender(
-                          header.column.columnDef.header,
-                          header.getContext()
-                        )}
-                  </TableHead>
-                ))}
-              </TableRow>
-            ))}
-          </TableHeader>
-          <TableBody>
-            {table.getRowModel().rows?.length ? (
-              table.getRowModel().rows.map((row) => (
-                <TableRow
-                  key={row.id}
-                  data-state={row.getIsSelected() && "selected"}
-                >
-                  {row.getVisibleCells().map((cell) => (
-                    <TableCell key={cell.id}>
-                      {flexRender(
-                        cell.column.columnDef.cell,
-                        cell.getContext()
-                      )}
-                    </TableCell>
+      <section className="rounded-xl border max-lg:px-4 p-10 w-[1050px]  ">
+        <div className="rounded-md border-none ">
+          <div className="flex max-xl:flex-col max-xl:items-end items-center justify-between w-full pb-10 gap-4">
+            <div className="relative">
+              {" "}
+              <Input
+                className="flex h-11 rounded-md border bg-transparent text-base shadow-sm transition-colors file:border-0 file:bg-transparent file:text-sm file:font-medium file:text-foreground placeholder:text-muted-foreground focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-ring disabled:cursor-not-allowed disabled:opacity-50 md:text-sm p-5 border-[#98908B] placeholder:max-lg:text-xs placeholder:text-sm w-full lg:min-w-[320px]"
+                placeholder="Search Transaction"
+                value={table.getColumn("name")?.getFilterValue() ?? ""}
+                onChange={(event) =>
+                  table.getColumn("name")?.setFilterValue(event.target.value)
+                }
+              />
+            </div>
+            <div className="flex items-center space-x-2 py-4">
+              <Label htmlFor="sort-select">Sort by:</Label>
+              <Select
+                value="Latest" // Set default value as "Latest"
+                onValueChange={(value) => {
+                  if (value === "Oldest") {
+                    // Sort by oldest (ascending)
+                    setSorting([
+                      { id: "date", desc: false }, // Ascending by date
+                    ]);
+                  } else if (value === "Latest") {
+                    // Sort by latest (descending)
+                    setSorting([
+                      { id: "date", desc: true }, // Descending by date
+                    ]);
+                  }
+                }}
+              >
+                <SelectTrigger className="w-[180px]">
+                  <SelectValue placeholder="Select Sorting" />
+                </SelectTrigger>
+                <SelectContent>
+                  <SelectItem value="Oldest">Oldest</SelectItem>
+                  <SelectItem value="Latest">Latest</SelectItem>
+                </SelectContent>
+              </Select>
+            </div>
+            <div className="flex items-center space-x-2 py-4">
+              <Label htmlFor="category-select">Category:</Label>
+              <Select
+                onValueChange={(value) => {
+                  if (value === "All Transactions") {
+                    setSelectedCategory("All Transactions");
+                    table.getColumn("category")?.setFilterValue(""); // Clear the filter
+                  } else {
+                    setSelectedCategory(value);
+                    table.getColumn("category")?.setFilterValue(value);
+                  }
+                }}
+              >
+                <SelectTrigger className="w-[180px]">
+                  <SelectValue
+                    placeholder={
+                      selectedCategory === "All Transactions"
+                        ? "All Transactions"
+                        : selectedCategory
+                    }
+                  />
+                </SelectTrigger>
+                <SelectContent>
+                  <SelectItem value="All Transactions">
+                    All Transactions
+                  </SelectItem>{" "}
+                  {/* Default option */}
+                  {categories.map((category) => (
+                    <SelectItem key={category} value={category}>
+                      {category}
+                    </SelectItem>
                   ))}
-                </TableRow>
-              ))
-            ) : (
-              <TableRow>
-                <TableCell
-                  colSpan={columns.length}
-                  className="h-24 text-center"
+                </SelectContent>
+              </Select>
+            </div>
+          </div>
+
+          <div className="relative w-full overflow-auto">
+            <Table className="w-full caption-bottom text-sm relative ">
+              <TableHeader>
+                {table.getHeaderGroups().map((headerGroup) => (
+                  <TableRow key={headerGroup.id}>
+                    {headerGroup.headers.map((header) => (
+                      <TableHead key={header.id}>
+                        {header.isPlaceholder
+                          ? null
+                          : flexRender(
+                              header.column.columnDef.header,
+                              header.getContext()
+                            )}
+                      </TableHead>
+                    ))}
+                  </TableRow>
+                ))}
+              </TableHeader>
+              <TableBody>
+                {table.getRowModel().rows?.length ? (
+                  table.getRowModel().rows.map((row) => {
+                    return (
+                      <TableRow
+                        key={row.id}
+                        data-state={row.getIsSelected() && "selected"}
+                      >
+                        {row.getVisibleCells().map((cell) => (
+                          <TableCell key={cell.id}>
+                            {flexRender(
+                              cell.column.columnDef.cell,
+                              cell.getContext()
+                            )}
+                          </TableCell>
+                        ))}
+                      </TableRow>
+                    );
+                  })
+                ) : (
+                  <TableRow>
+                    <TableCell
+                      colSpan={table.getAllColumns().length}
+                      className="h-24 text-center"
+                    >
+                      No results.
+                    </TableCell>
+                  </TableRow>
+                )}
+              </TableBody>
+            </Table>
+          </div>
+        </div>
+        <Pagination>
+          <PaginationContent>
+            <PaginationItem>
+              <PaginationPrevious
+                onClick={() => table.previousPage()}
+                disabled={!table.getCanPreviousPage()}
+              />
+            </PaginationItem>
+            {Array.from({ length: table.getPageCount() }, (_, index) => (
+              <PaginationItem key={index}>
+                <PaginationLink
+                  href="#"
+                  isActive={table.getState().pagination.pageIndex === index}
+                  onClick={() => table.setPageIndex(index)}
                 >
-                  No results.
-                </TableCell>
-              </TableRow>
-            )}
-          </TableBody>
-        </Table>
-      </div>
-      <div className="flex items-center justify-end space-x-2 py-4">
-        <div className="flex-1 text-sm text-muted-foreground">
-          {table.getFilteredSelectedRowModel().rows.length} of{" "}
-          {table.getFilteredRowModel().rows.length} row(s) selected.
-        </div>
-        <div className="space-x-2">
-          <Button
-            variant="outline"
-            size="sm"
-            onClick={() => table.previousPage()}
-            disabled={!table.getCanPreviousPage()}
-          >
-            Previous
-          </Button>
-          <Button
-            variant="outline"
-            size="sm"
-            onClick={() => table.nextPage()}
-            disabled={!table.getCanNextPage()}
-          >
-            Next
-          </Button>
-        </div>
-      </div>
+                  {index + 1}
+                </PaginationLink>
+              </PaginationItem>
+            ))}
+            <PaginationItem>
+              <PaginationNext
+                onClick={() => table.nextPage()}
+                disabled={!table.getCanNextPage()}
+              />
+            </PaginationItem>
+          </PaginationContent>
+        </Pagination>
+      </section>
     </div>
   );
 }
