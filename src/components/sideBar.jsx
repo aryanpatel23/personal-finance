@@ -33,7 +33,7 @@ const items = [
 
 export function AppSidebar() {
   return (
-    <Sidebar className="hidden h-screen fixed top-0 left-0 z-10 lg:block bg-[#201F24] rounded-tr-xl rounded-br-xl duration-500 transition-[width] w-[300px] collapsible=offcanvas | icon | none">
+    <Sidebar className="hidden h-screen fixed top-0 left-0 z-10 lg:block bg-[#201F24] rounded-tr-xl  duration-500 transition-[width] w-[300px] ">
       <SidebarContent className="bg-[#201F24] text-2xl font-extrabold mb-4">
         <SidebarGroup className="w-[292px]">
           <SidebarGroupLabel className="text-white text-lg font-bold px-5 py-12 pt-8">

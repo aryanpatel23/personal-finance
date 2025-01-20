@@ -65,34 +65,30 @@ export default function DataTableDemo() {
   const table = useReactTable({
     data: transactions.transactions, // Use transactions from JSON file
     columns: [
-      // {
-      //   accessorKey: "avatar",
-      //   header: "Avatar",
-      //   cell: ({ row }) => (
-      //     <img
-      //       src={row.getValue("avatar")}
-      //       alt="avatar"
-      //       className="w-10 h-10 rounded-full object-cover"
-      //     />
-      //   ),
-      //   enableSorting: false, // Disable sorting for images
-      // },
       {
-        accessorKey: "name",
+        accessorKey: "recipientSender", // Logical name for the column
         header: "Recipient / Sender",
-        cell: ({ row }) => (
-          <div className="flex items-center gap-4">
-            <img
-              src={row.getValue("avatar")}
-              alt="avatar"
-              className="w-8 h-8 rounded-full object-cover "
-            />
-            <div className="text-left font-semibold text-[#201F24]">
-              {row.getValue("name")}
+        cell: ({ row }) => {
+          const avatar = row.original.avatar; // Ensure data matches your structure
+          const name = row.original.name;
+
+          return (
+            <div className="flex items-center space-x-3">
+              {avatar && (
+                <img
+                  src={avatar}
+                  alt={name || "Avatar"}
+                  className="w-10 h-10 rounded-full object-cover"
+                />
+              )}
+              <div className="text-left font-semibold text-[#201F24]">
+                {name || "No Name"}
+              </div>
             </div>
-          </div>
-        ),
+          );
+        },
       },
+
       {
         accessorKey: "category",
         cell: ({ row }) => (
@@ -143,7 +139,7 @@ export default function DataTableDemo() {
   );
 
   return (
-    <div className="px-2.5rem py-2.5rem lg:px-20 pt-[90px] w-[1100px]">
+    <div className="px-2.5rem py-2.5rem lg:px-6 pt-[90px] w-[1000px]">
       <div className="absolute top-8 ">
         <h1 className="text-2xl font-bold">Transactions</h1>
       </div>
@@ -153,7 +149,7 @@ export default function DataTableDemo() {
             <div className="relative">
               {" "}
               <Input
-                className="flex h-11 rounded-md border bg-transparent text-base shadow-sm transition-colors file:border-0 file:bg-transparent file:text-sm file:font-medium file:text-foreground placeholder:text-muted-foreground focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-ring disabled:cursor-not-allowed disabled:opacity-50 md:text-sm p-5 border-[#98908B] placeholder:max-lg:text-xs placeholder:text-sm w-full lg:min-w-[320px]"
+                className="flex h-11 rounded-xl border text-base shadow-sm transition-colors file:border-0 file:bg-transparent file:text-sm file:font-medium file:text-foreground placeholder:text-muted-foreground focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-ring disabled:cursor-not-allowed disabled:opacity-50 md:text-sm p-5 border-[#98908B] placeholder:max-lg:text-xs placeholder:text-sm w-full lg:min-w-[320px]"
                 placeholder="Search Transaction"
                 value={table.getColumn("name")?.getFilterValue() ?? ""}
                 onChange={(event) =>
@@ -161,10 +157,10 @@ export default function DataTableDemo() {
                 }
               />
             </div>
-            <div className="flex items-center space-x-2 py-4">
+            <div className="flex items-center space-x-2 py-4 ">
               <Label htmlFor="sort-select">Sort by:</Label>
               <Select
-                value="Latest" // Set default value as "Latest"
+                value={sorting[0]?.desc === false ? "Oldest" : "Latest"} // Dynamically set value based on sorting state
                 onValueChange={(value) => {
                   if (value === "Oldest") {
                     // Sort by oldest (ascending)
@@ -182,13 +178,14 @@ export default function DataTableDemo() {
                 <SelectTrigger className="w-[180px]">
                   <SelectValue placeholder="Select Sorting" />
                 </SelectTrigger>
-                <SelectContent>
+                <SelectContent className="bg-white">
                   <SelectItem value="Oldest">Oldest</SelectItem>
                   <SelectItem value="Latest">Latest</SelectItem>
                 </SelectContent>
               </Select>
             </div>
-            <div className="flex items-center space-x-2 py-4">
+
+            <div className="flex items-center space-x-2 py-4 ">
               <Label htmlFor="category-select">Category:</Label>
               <Select
                 onValueChange={(value) => {
@@ -210,7 +207,7 @@ export default function DataTableDemo() {
                     }
                   />
                 </SelectTrigger>
-                <SelectContent>
+                <SelectContent className="bg-white">
                   <SelectItem value="All Transactions">
                     All Transactions
                   </SelectItem>{" "}
