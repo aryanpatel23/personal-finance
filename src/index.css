@@ -38,7 +38,9 @@ main {
   flex-grow: 1;
   margin-left: 20px;
   padding: 2rem;
-  background-color: var(--background);
+  background-color: #f8f4f0;
+  width: max-content;
+  height: max-content;
 }
 
 @media (max-width: 768px) {

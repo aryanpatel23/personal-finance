@@ -63,13 +63,6 @@
 }
 
 /* Main content area */
-main {
-  margin-left: 250px; /* Same width as sidebar to prevent overlap */
-  padding: 2rem;
-  flex-grow: 1;
-  min-height: 100vh; /* Ensures main content spans the full height */
-  overflow-x: hidden;
-}
 
 /* Responsive adjustments for smaller screens */
 @media (max-width: 768px) {

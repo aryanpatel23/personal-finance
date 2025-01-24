@@ -66,7 +66,7 @@ export default function DataTableDemo() {
     data: transactions.transactions, // Use transactions from JSON file
     columns: [
       {
-        accessorKey: "recipientSender", // Logical name for the column
+        accessorKey: "name", // Logical name for the column
         header: "Recipient / Sender",
         cell: ({ row }) => {
           const avatar = row.original.avatar; // Ensure data matches your structure
@@ -139,11 +139,11 @@ export default function DataTableDemo() {
   );
 
   return (
-    <div className="px-2.5rem py-2.5rem lg:px-6 pt-[90px] w-[1000px]">
+    <div className="px-2.5rem py-2.5rem lg:px-6 pt-[90px] max-w-full">
       <div className="absolute top-8 ">
         <h1 className="text-2xl font-bold">Transactions</h1>
       </div>
-      <section className="rounded-xl border max-lg:px-4 p-10 w-[1050px]  ">
+      <section className="rounded-xl border max-lg:px-4 p-10 w-[1050px] bg-white ">
         <div className="rounded-md border-none ">
           <div className="flex max-xl:flex-col max-xl:items-end items-center justify-between w-full pb-10 gap-4">
             <div className="relative">
@@ -223,7 +223,7 @@ export default function DataTableDemo() {
           </div>
 
           <div className="relative w-full overflow-auto">
-            <Table className="w-full caption-bottom text-sm relative ">
+            <Table className="w-full caption-bottom text-sm relative  ">
               <TableHeader>
                 {table.getHeaderGroups().map((headerGroup) => (
                   <TableRow key={headerGroup.id}>
