@@ -4,6 +4,8 @@ import { AppSidebar } from "@/components/sideBar";
 import DataTableDemo from "@/components/Transaction";
 import transactions from "/Users/aryanpatel/Desktop/personal_finance/src/data.json"; // Import the JSON data
 import { CardWithForm } from "@/components/pots"; // Import the CardWithForm component
+import Budgets from "./components/budget";
+import RecurringBills from "./components/recurringBills";
 
 export default function Layout() {
   return (
@@ -15,16 +17,14 @@ export default function Layout() {
             <Routes>
               <Route path="/" element={<div>Welcome to the Dashboard</div>} />
               <Route path="/overview" element={<div>Overview Page</div>} />
-              <Route path="/budget" element={<div>Budget Page</div>} />
+              <Route path="/budget" element={<Budgets />} />
+
               <Route
                 path="/transactions"
                 element={<DataTableDemo transactions={transactions} />}
               />
               <Route path="/pots" element={<CardWithForm />} />
-              <Route
-                path="/recurring-bills"
-                element={<div>Recurring Bills Page</div>}
-              />
+              <Route path="/recurring-bills" element={<RecurringBills />} />
             </Routes>
           </main>
         </div>
