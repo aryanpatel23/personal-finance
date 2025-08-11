@@ -6,6 +6,7 @@ import transactions from "/Users/aryanpatel/Desktop/personal_finance/src/data.js
 import { CardWithForm } from "@/components/pots"; // Import the CardWithForm component
 import Budgets from "./components/budget";
 import RecurringBills from "./components/recurringBills";
+import Overview from "./components/Overview";
 
 export default function Layout() {
   return (
@@ -16,7 +17,7 @@ export default function Layout() {
           <main>
             <Routes>
               <Route path="/" element={<div>Welcome to the Dashboard</div>} />
-              <Route path="/overview" element={<div>Overview Page</div>} />
+              <Route path="/overview" element={<Overview />} />
               <Route path="/budget" element={<Budgets />} />
 
               <Route
