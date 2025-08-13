@@ -12,23 +12,21 @@ export default function Layout() {
   return (
     <Router>
       <SidebarProvider>
-        <div style={{ display: "flex" }}>
-          <AppSidebar />
-          <main>
-            <Routes>
-              <Route path="/" element={<div>Welcome to the Dashboard</div>} />
-              <Route path="/overview" element={<Overview />} />
-              <Route path="/budget" element={<Budgets />} />
+        <AppSidebar />
+        <main>
+          <Routes>
+            <Route path="/" element={<div>Welcome to the Dashboard</div>} />
+            <Route path="/overview" element={<Overview />} />
+            <Route path="/budget" element={<Budgets />} />
 
-              <Route
-                path="/transactions"
-                element={<DataTableDemo transactions={transactions} />}
-              />
-              <Route path="/pots" element={<CardWithForm />} />
-              <Route path="/recurring-bills" element={<RecurringBills />} />
-            </Routes>
-          </main>
-        </div>
+            <Route
+              path="/transactions"
+              element={<DataTableDemo transactions={transactions} />}
+            />
+            <Route path="/pots" element={<CardWithForm />} />
+            <Route path="/recurring-bills" element={<RecurringBills />} />
+          </Routes>
+        </main>
       </SidebarProvider>
     </Router>
   );
