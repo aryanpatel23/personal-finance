@@ -6,6 +6,11 @@ import transactions from "/Users/aryanpatel/Desktop/personal_finance/src/data.js
 import { CardWithForm } from "@/components/pots"; // Import the CardWithForm component
 import Budgets from "./components/budget";
 import RecurringBills from "./components/recurringBills";
+// import { initializeApp } from "firebase/app";
+// import { getAnalytics } from "firebase/analytics";
+// import { firebaseConfig } from "./components/firebase";
+const app = initializeApp(firebaseConfig);
+const analytics = getAnalytics(app);
 import Overview from "./components/Overview";
 
 export default function Layout() {

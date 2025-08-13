@@ -2,7 +2,7 @@ import React from "react";
 import { Link } from "react-router-dom";
 import data from "/Users/aryanpatel/Desktop/personal_finance/src/data.json";
 import { PieChart, Pie, Cell, Label } from "recharts";
-import potIcon from "../assets/images/icon-pot.svg";
+import potIcon from "/assets/images/icon-pot.svg";
 import { ChevronRight } from "lucide-react";
 
 const categoryColors = {
