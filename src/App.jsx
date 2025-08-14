@@ -9,8 +9,8 @@ import RecurringBills from "./components/recurringBills";
 // import { initializeApp } from "firebase/app";
 // import { getAnalytics } from "firebase/analytics";
 // import { firebaseConfig } from "./components/firebase";
-const app = initializeApp(firebaseConfig);
-const analytics = getAnalytics(app);
+// const app = initializeApp(firebaseConfig);
+// const analytics = getAnalytics(app);
 import Overview from "./components/Overview";
 
 export default function Layout() {
@@ -20,7 +20,7 @@ export default function Layout() {
         <AppSidebar />
         <main>
           <Routes>
-            <Route path="/" element={<div>Welcome to the Dashboard</div>} />
+            <Route path="/" element={<Overview />} />
             <Route path="/overview" element={<Overview />} />
             <Route path="/budget" element={<Budgets />} />
 

@@ -1,10 +1,10 @@
 import { Link } from "react-router-dom";
-import OverviewIcon from "/assets/images/icon-nav-overview.svg";
-import BudgetIcon from "/assets/images/icon-nav-budgets.svg";
-import TransactionIcon from "/assets/images/icon-nav-transactions.svg";
-import PotsIcon from "/assets/images/icon-nav-pots.svg";
-import RecurringIcon from "/assets/images/icon-nav-recurring-bills.svg";
-import LogoLarge from "/assets/images/logo-large.svg";
+import OverviewIcon from "../assets/images/icon-nav-overview.svg";
+import BudgetIcon from "../assets/images/icon-nav-budgets.svg";
+import TransactionIcon from "../assets/images/icon-nav-transactions.svg";
+import PotsIcon from "../assets/images/icon-nav-pots.svg";
+import RecurringIcon from "../assets/images/icon-nav-recurring-bills.svg";
+import LogoLarge from "../assets/images/logo-large.svg";
 import { useSidebar } from "@/components/ui/sidebar";
 
 export function CustomTrigger() {
