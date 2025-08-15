@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import data from "/Users/aryanpatel/Desktop/personal_finance/src/data.json";
+import data from "../data.json";
 import { Button } from "@/components/ui/button";
 import { Progress } from "@/components/ui/progress";
 import { ChevronRight, MoreHorizontal, Plus, X } from "lucide-react";

@@ -1,7 +1,7 @@
 "use client";
 
 import React, { useState } from "react";
-import transactions from "/Users/aryanpatel/Desktop/personal_finance/src/data.json";
+import transactions from "../data.json";
 import { Label } from "@/components/ui/label";
 
 import {

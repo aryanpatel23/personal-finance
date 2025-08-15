@@ -39,7 +39,7 @@ import {
 } from "@/components/ui/select";
 
 // Importing JSON data
-import data from "/Users/aryanpatel/Desktop/personal_finance/src/data.json";
+import data from "../data.json";
 
 export function CardWithForm() {
   const [potsData, setPotsData] = React.useState(data.pots); // Store the pots data in state

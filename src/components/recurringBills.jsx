@@ -1,5 +1,5 @@
 import React, { useState, useMemo } from "react";
-import data from "/Users/aryanpatel/Desktop/personal_finance/src/data.json";
+import data from "../data.json";
 import { Input } from "@/components/ui/input";
 import {
   Select,

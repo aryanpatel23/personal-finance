@@ -2,15 +2,11 @@ import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 import { SidebarProvider } from "@/components/ui/sidebar";
 import { AppSidebar } from "@/components/sideBar";
 import DataTableDemo from "@/components/Transaction";
-import transactions from "/Users/aryanpatel/Desktop/personal_finance/src/data.json"; // Import the JSON data
+import transactions from "./data.json"; // Import the JSON data
 import { CardWithForm } from "@/components/pots"; // Import the CardWithForm component
 import Budgets from "./components/budget";
 import RecurringBills from "./components/recurringBills";
-// import { initializeApp } from "firebase/app";
-// import { getAnalytics } from "firebase/analytics";
-// import { firebaseConfig } from "./components/firebase";
-// const app = initializeApp(firebaseConfig);
-// const analytics = getAnalytics(app);
+
 import Overview from "./components/Overview";
 
 export default function Layout() {
