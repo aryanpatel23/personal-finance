@@ -6,7 +6,7 @@
   },
   "transactions": [
     {
-      "avatar": "../public/images/avatars/emma-richardson.jpg",
+      "avatar": "/images/avatars/emma-richardson.jpg",
       "name": "Emma Richardson",
       "category": "General",
       "date": "2024-08-19T14:23:11Z",
@@ -14,7 +14,7 @@
       "recurring": false
     },
     {
-      "avatar": "../public/images/avatars/savory-bites-bistro.jpg",
+      "avatar": "/images/avatars/savory-bites-bistro.jpg",
       "name": "Savory Bites Bistro",
       "category": "Dining Out",
       "date": "2024-08-19T20:23:11Z",
