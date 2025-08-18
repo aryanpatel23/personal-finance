@@ -2,7 +2,7 @@ import React from "react";
 import { Link } from "react-router-dom";
 import data from "../data.json";
 import { PieChart, Pie, Cell, Label } from "recharts";
-import potIcon from "../../public/images/icon-pot.svg";
+import potIcon from "/images/icon-pot.svg";
 import { ChevronRight } from "lucide-react";
 
 const categoryColors = {
