@@ -4,19 +4,70 @@
 
 @layer base {
   :root {
-    --background: 0 0% 100%;
-    --foreground: 0 0% 3.9%;
-    --card: 0 0% 100%;
-    --sidebar-background: 240 5.9% 10%;
-    --sidebar-foreground: 240 4.8% 95.9%;
-    --sidebar-primary: 224.3 76.3% 48%;
+    --background: 237 48% 8%;
+    --foreground: 240 100% 98%;
+    --card: 249 40% 15%;
+    --card-foreground: 240 100% 98%;
+    --popover: 249 40% 12%;
+    --popover-foreground: 240 100% 98%;
+    --primary: 263 70% 55%;
+    --primary-foreground: 0 0% 100%;
+    --secondary: 249 35% 20%;
+    --secondary-foreground: 240 100% 98%;
+    --muted: 249 30% 18%;
+    --muted-foreground: 245 15% 65%;
+    --accent: 263 70% 55%;
+    --accent-foreground: 0 0% 100%;
+    --destructive: 0 84% 60%;
+    --destructive-foreground: 0 0% 100%;
+    --border: 249 30% 22%;
+    --input: 249 35% 20%;
+    --ring: 263 70% 55%;
+    --radius: 0.75rem;
+    --sidebar-background: 255 48% 11%;
+    --sidebar-foreground: 240 100% 98%;
+    --sidebar-primary: 263 70% 55%;
     --sidebar-primary-foreground: 0 0% 100%;
+    --sidebar-accent: 249 35% 20%;
+    --sidebar-accent-foreground: 240 100% 98%;
+    --sidebar-border: 249 30% 22%;
+    --sidebar-ring: 263 70% 55%;
+    --chart-1: 263 70% 55%;
+    --chart-2: 217 91% 60%;
+    --chart-3: 142 76% 36%;
+    --chart-4: 38 92% 50%;
+    --chart-5: 0 84% 60%;
   }
+}
 
+@layer base {
+  * {
+    @apply border-border;
+  }
   body {
     @apply bg-background text-foreground;
-    font-family: "Arial", sans-serif;
+    font-family: 'Inter', 'Segoe UI', system-ui, -apple-system, sans-serif;
   }
+}
+
+#root {
+  min-height: 100vh;
+  display: flex;
+}
+
+::-webkit-scrollbar {
+  width: 6px;
+  height: 6px;
+}
+::-webkit-scrollbar-track {
+  background: #130f2a;
+}
+::-webkit-scrollbar-thumb {
+  background: #2d2b4e;
+  border-radius: 3px;
+}
+::-webkit-scrollbar-thumb:hover {
+  background: #7c3aed;
 }
 
 #root {
