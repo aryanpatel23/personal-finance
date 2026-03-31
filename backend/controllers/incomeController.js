@@ -31,7 +31,12 @@ exports.updateIncome = async (req, res) => {
       return res.status(404).json({ message: 'Income record not found' });
     }
 
-    const updated = await Income.findByIdAndUpdate(req.params.id, req.body, { new: true });
+    const { source, amount, frequency, date, description } = req.body;
+    const updated = await Income.findByIdAndUpdate(
+      req.params.id,
+      { $set: { source, amount, frequency, date, description } },
+      { new: true }
+    );
     res.json(updated);
   } catch (err) {
     res.status(500).json({ message: 'Server error' });

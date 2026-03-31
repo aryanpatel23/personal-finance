@@ -53,7 +53,12 @@ exports.updateBudget = async (req, res) => {
       return res.status(404).json({ message: 'Budget not found' });
     }
 
-    const updated = await Budget.findByIdAndUpdate(req.params.id, req.body, { new: true });
+    const { category, maximum, theme, period } = req.body;
+    const updated = await Budget.findByIdAndUpdate(
+      req.params.id,
+      { $set: { category, maximum, theme, period } },
+      { new: true }
+    );
     res.json(updated);
   } catch (err) {
     res.status(500).json({ message: 'Server error' });
