@@ -1,5 +1,6 @@
 const express = require('express');
 const auth = require('../middleware/auth');
+const { apiLimiter } = require('../middleware/rateLimiter');
 const {
   getIncome,
   addIncome,
@@ -9,6 +10,7 @@ const {
 
 const router = express.Router();
 
+router.use(apiLimiter);
 router.use(auth);
 
 router.get('/', getIncome);

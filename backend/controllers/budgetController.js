@@ -1,5 +1,8 @@
+const mongoose = require('mongoose');
 const Budget = require('../models/Budget');
 const Transaction = require('../models/Transaction');
+
+const isValidId = (id) => mongoose.Types.ObjectId.isValid(id);
 
 exports.getBudgets = async (req, res) => {
   try {
@@ -42,6 +45,9 @@ exports.addBudget = async (req, res) => {
 
 exports.updateBudget = async (req, res) => {
   try {
+    if (!isValidId(req.params.id)) {
+      return res.status(400).json({ message: 'Invalid budget id' });
+    }
     const budget = await Budget.findOne({ _id: req.params.id, userId: req.user.id });
     if (!budget) {
       return res.status(404).json({ message: 'Budget not found' });
@@ -56,6 +62,9 @@ exports.updateBudget = async (req, res) => {
 
 exports.deleteBudget = async (req, res) => {
   try {
+    if (!isValidId(req.params.id)) {
+      return res.status(400).json({ message: 'Invalid budget id' });
+    }
     const budget = await Budget.findOne({ _id: req.params.id, userId: req.user.id });
     if (!budget) {
       return res.status(404).json({ message: 'Budget not found' });

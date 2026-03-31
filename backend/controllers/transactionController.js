@@ -1,4 +1,7 @@
+const mongoose = require('mongoose');
 const Transaction = require('../models/Transaction');
+
+const isValidId = (id) => mongoose.Types.ObjectId.isValid(id);
 
 exports.getTransactions = async (req, res) => {
   try {
@@ -20,6 +23,9 @@ exports.addTransaction = async (req, res) => {
 
 exports.updateTransaction = async (req, res) => {
   try {
+    if (!isValidId(req.params.id)) {
+      return res.status(400).json({ message: 'Invalid transaction id' });
+    }
     const transaction = await Transaction.findOne({ _id: req.params.id, userId: req.user.id });
     if (!transaction) {
       return res.status(404).json({ message: 'Transaction not found' });
@@ -34,6 +40,9 @@ exports.updateTransaction = async (req, res) => {
 
 exports.deleteTransaction = async (req, res) => {
   try {
+    if (!isValidId(req.params.id)) {
+      return res.status(400).json({ message: 'Invalid transaction id' });
+    }
     const transaction = await Transaction.findOne({ _id: req.params.id, userId: req.user.id });
     if (!transaction) {
       return res.status(404).json({ message: 'Transaction not found' });

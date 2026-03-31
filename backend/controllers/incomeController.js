@@ -1,4 +1,7 @@
+const mongoose = require('mongoose');
 const Income = require('../models/Income');
+
+const isValidId = (id) => mongoose.Types.ObjectId.isValid(id);
 
 exports.getIncome = async (req, res) => {
   try {
@@ -20,6 +23,9 @@ exports.addIncome = async (req, res) => {
 
 exports.updateIncome = async (req, res) => {
   try {
+    if (!isValidId(req.params.id)) {
+      return res.status(400).json({ message: 'Invalid income id' });
+    }
     const income = await Income.findOne({ _id: req.params.id, userId: req.user.id });
     if (!income) {
       return res.status(404).json({ message: 'Income record not found' });
@@ -34,6 +40,9 @@ exports.updateIncome = async (req, res) => {
 
 exports.deleteIncome = async (req, res) => {
   try {
+    if (!isValidId(req.params.id)) {
+      return res.status(400).json({ message: 'Invalid income id' });
+    }
     const income = await Income.findOne({ _id: req.params.id, userId: req.user.id });
     if (!income) {
       return res.status(404).json({ message: 'Income record not found' });
