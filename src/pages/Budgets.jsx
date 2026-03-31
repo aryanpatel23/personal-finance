@@ -41,7 +41,7 @@ export default function Budgets() {
   };
 
   const handleDelete = async (id) => {
-    try { await api.delete(`/budgets/${id}`); } catch {}
+    try { await api.delete(`/budgets/${id}`); } catch { /* ignore – already removed locally */ }
     setBudgets(prev => prev.filter(b => b._id !== id));
   };
 

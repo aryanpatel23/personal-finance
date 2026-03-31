@@ -54,7 +54,7 @@ export default function Transactions() {
   const handleDelete = async (id) => {
     try {
       await api.delete(`/transactions/${id}`);
-    } catch {}
+    } catch { /* ignore – already removed locally */ }
     setTransactions(prev => prev.filter(t => t._id !== id));
   };
 

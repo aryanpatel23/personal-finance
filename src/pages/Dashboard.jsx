@@ -109,7 +109,7 @@ export default function Dashboard() {
       <div className="flex items-start justify-between">
         <div>
           <h1 className="text-2xl font-bold text-white">{greeting}, {firstName}! 👋</h1>
-          <p className="text-[#9b99b5] mt-1">Here's your financial overview for today</p>
+          <p className="text-[#9b99b5] mt-1">Here&apos;s your financial overview for today</p>
         </div>
         <div className="text-right hidden sm:block">
           <div className="text-sm text-[#9b99b5]">{new Date().toLocaleDateString('en-US', { weekday: 'long', month: 'long', day: 'numeric' })}</div>

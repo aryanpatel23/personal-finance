@@ -43,7 +43,7 @@ export default function Income() {
   };
 
   const handleDelete = async (id) => {
-    try { await api.delete(`/income/${id}`); } catch {}
+    try { await api.delete(`/income/${id}`); } catch { /* ignore – already removed locally */ }
     setIncomes(prev => prev.filter(i => i._id !== id));
   };
 

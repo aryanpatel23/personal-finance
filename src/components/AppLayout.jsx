@@ -3,7 +3,7 @@ import { Link, useLocation, useNavigate } from 'react-router-dom';
 import { useAuth } from '../context/AuthContext';
 import {
   LayoutDashboard, ArrowLeftRight, PieChart, TrendingUp,
-  BarChart3, Settings, LogOut, TrendingUp as TrendingUpIcon, Menu, X, Bell
+  BarChart3, Settings, LogOut, Wallet, Menu, X, Bell
 } from 'lucide-react';
 
 const navItems = [
@@ -45,7 +45,7 @@ export default function AppLayout({ children }) {
         {/* Logo */}
         <div className="flex items-center gap-3 px-6 py-6 border-b border-[#2d2b4e]">
           <div className="w-9 h-9 bg-purple-600 rounded-xl flex items-center justify-center flex-shrink-0">
-            <TrendingUpIcon className="w-5 h-5 text-white" />
+            <Wallet className="w-5 h-5 text-white" />
           </div>
           <span className="text-lg font-bold text-white">FinanceAI</span>
           <button
