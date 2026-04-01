@@ -1,6 +1,6 @@
 import { createContext, useContext, useState, useEffect } from 'react';
 import { signInWithPopup } from 'firebase/auth';
-import { auth, googleProvider } from '../firebase';
+import { auth, googleProvider, firebaseConfigured } from '../firebase';
 import api from '../utils/api';
 
 const AuthContext = createContext(null);
@@ -37,6 +37,9 @@ export function AuthProvider({ children }) {
   };
 
   const loginWithGoogle = async () => {
+    if (!firebaseConfigured) {
+      throw new Error('Google Sign-In is not configured. Please contact support.');
+    }
     const result = await signInWithPopup(auth, googleProvider);
     const { GoogleAuthProvider } = await import('firebase/auth');
     const credential = GoogleAuthProvider.credentialFromResult(result);
@@ -59,7 +62,7 @@ export function AuthProvider({ children }) {
   };
 
   return (
-    <AuthContext.Provider value={{ user, loading, login, register, loginWithGoogle, logout }}>
+    <AuthContext.Provider value={{ user, loading, login, register, loginWithGoogle, logout, googleEnabled: firebaseConfigured }}>
       {children}
     </AuthContext.Provider>
   );

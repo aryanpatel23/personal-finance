@@ -22,7 +22,7 @@ export default function Register() {
   const [error, setError] = useState('');
   const [loading, setLoading] = useState(false);
   const [googleLoading, setGoogleLoading] = useState(false);
-  const { register, loginWithGoogle } = useAuth();
+  const { register, loginWithGoogle, googleEnabled } = useAuth();
   const navigate = useNavigate();
 
   const handleSubmit = async (e) => {
@@ -74,21 +74,25 @@ export default function Register() {
             </div>
           )}
 
-          <button
-            type="button"
-            onClick={handleGoogle}
-            disabled={googleLoading || loading}
-            className="w-full flex items-center justify-center gap-3 bg-white hover:bg-gray-100 text-gray-800 font-semibold py-3 px-6 rounded-xl transition disabled:opacity-60 disabled:cursor-not-allowed mb-5"
-          >
-            <GoogleIcon />
-            {googleLoading ? 'Signing up…' : 'Sign up with Google'}
-          </button>
+          {googleEnabled && (
+            <>
+              <button
+                type="button"
+                onClick={handleGoogle}
+                disabled={googleLoading || loading}
+                className="w-full flex items-center justify-center gap-3 bg-white hover:bg-gray-100 text-gray-800 font-semibold py-3 px-6 rounded-xl transition disabled:opacity-60 disabled:cursor-not-allowed mb-5"
+              >
+                <GoogleIcon />
+                {googleLoading ? 'Signing up…' : 'Sign up with Google'}
+              </button>
 
-          <div className="flex items-center gap-3 mb-5">
-            <div className="flex-1 h-px bg-[#2d2b4e]" />
-            <span className="text-[#4a4860] text-sm">or</span>
-            <div className="flex-1 h-px bg-[#2d2b4e]" />
-          </div>
+              <div className="flex items-center gap-3 mb-5">
+                <div className="flex-1 h-px bg-[#2d2b4e]" />
+                <span className="text-[#4a4860] text-sm">or</span>
+                <div className="flex-1 h-px bg-[#2d2b4e]" />
+              </div>
+            </>
+          )}
 
           <form onSubmit={handleSubmit} className="space-y-5">
             <div>

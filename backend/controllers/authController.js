@@ -20,17 +20,17 @@ exports.register = async (req, res) => {
   }
 
   const { name, email, password } = req.body;
-  const normalizedEmail = email.toLowerCase().trim();
+  const normalizedEmail = String(email);
   try {
     const existing = await User.findOne({ email: normalizedEmail });
     if (existing) {
       return res.status(400).json({ message: 'Email already in use' });
     }
 
-    const salt = await bcrypt.genSalt(13);
+    const salt = await bcrypt.genSalt(10);
     const hashedPassword = await bcrypt.hash(password, salt);
 
-    const user = await User.create({ name, email: normalizedEmail, password: hashedPassword });
+    const user = await User.create({ name: name.trim(), email: normalizedEmail, password: hashedPassword });
     const token = generateToken(user);
 
     res.status(201).json({
@@ -50,7 +50,7 @@ exports.login = async (req, res) => {
   }
 
   const { email, password } = req.body;
-  const normalizedEmail = email.toLowerCase().trim();
+  const normalizedEmail = String(email);
   try {
     const user = await User.findOne({ email: normalizedEmail });
     if (!user) {
@@ -100,7 +100,7 @@ exports.googleAuth = async (req, res) => {
       return res.status(400).json({ message: 'Google account email is not verified.' });
     }
 
-    const normalizedEmail = email.toLowerCase().trim();
+    const normalizedEmail = email.toLowerCase();
     let user = await User.findOne({ email: normalizedEmail });
 
     if (user) {
