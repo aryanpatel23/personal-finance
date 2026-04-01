@@ -3,11 +3,28 @@ const express = require('express');
 const cors = require('cors');
 const connectDB = require('./config/db');
 
+// Fail fast if required environment variables are missing
+const REQUIRED_ENV = ['MONGODB_URI', 'JWT_SECRET'];
+const missing = REQUIRED_ENV.filter((key) => !process.env[key]);
+if (missing.length > 0) {
+  console.error(`Missing required environment variables: ${missing.join(', ')}`);
+  console.error('Copy .env.example to backend/.env and fill in the values.');
+  process.exit(1);
+}
+
 const app = express();
 
 connectDB();
 
-app.use(cors());
+const corsOrigin = process.env.CORS_ORIGIN
+  ? process.env.CORS_ORIGIN.split(',').map((s) => s.trim())
+  : ['http://localhost:5173', 'http://localhost:3000', 'http://localhost:5000'];
+
+app.use(cors({
+  origin: corsOrigin,
+  methods: ['GET', 'POST', 'PUT', 'PATCH', 'DELETE', 'OPTIONS'],
+  allowedHeaders: ['Content-Type', 'Authorization'],
+}));
 app.use(express.json());
 
 app.use('/api/auth', require('./routes/auth'));
